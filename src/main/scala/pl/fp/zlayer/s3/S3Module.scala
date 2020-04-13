@@ -30,4 +30,8 @@ object S3Module {
   val liveLayer: ZLayer[Config, Nothing, Service] = {
     ZLayer.fromServiceManaged(cfg => live.provide(cfg))
   }
+
+  def upload(key: Key, data: Array[Byte]): ZIO[Service, S3Error, Long] =
+    ZIO.accessM[Service](_.get.upload(key, data))
+
 }

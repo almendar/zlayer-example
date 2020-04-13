@@ -18,10 +18,9 @@ object ClientService {
       avatar: Array[Byte]
   ): ZIO[S3Module.Service with UserRepo, ClientServiceError, Unit] = {
     for {
-      s3   <- ZIO.access[S3Module.Service](_.get)
       user <- db.validate(db.User()).mapError(x => CouldNotRegiser(login))
       _    <- db.createUser(user).mapError(x => CouldNotRegiser(login))
-      _    <- s3.upload(s"avatar_${login}", avatar).mapError(x => CouldNotRegiser(login))
+      _    <- S3Module.upload(s"avatar_${login}", avatar).mapError(x => CouldNotRegiser(login))
     } yield ()
   }
 }
