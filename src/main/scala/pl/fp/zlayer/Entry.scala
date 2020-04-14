@@ -12,7 +12,7 @@ object Entry extends App {
   val readDbConfig: Layer[Nothing, Has[db.DBCredentials]] =
     ZLayer.fromEffect(UIO(db.DBCredentials("", "", "")))
   val readS3Config: Layer[Nothing, S3Module.Config] =
-    ZLayer.fromEffect(UIO(S3Client.S3Config("", "", "")))
+    ZLayer.fromEffect(UIO(S3Client.S3Config("", "", "", "")))
 
   override def run(args: List[String]): ZIO[zio.ZEnv, Nothing, Int] = {
 

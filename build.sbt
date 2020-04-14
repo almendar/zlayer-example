@@ -1,5 +1,8 @@
-val zio_V = "1.0.0-RC18-2"
-
+val zio_V     = "1.0.0-RC18-2"
+val AwsJavaS3 = "com.amazonaws" % "aws-java-sdk-s3" % "1.11.375"
+val ZioAll = Seq("zio", "zio-streams", "zio-test", "zio-test-sbt").map(artifact =>
+  "dev.zio" %% artifact % zio_V
+)
 lazy val zlayerExample =
   project
     .in(file("."))
@@ -10,7 +13,5 @@ lazy val zlayerExample =
       fork := true
     )
     .settings(
-      libraryDependencies ++= Seq("zio", "zio-streams", "zio-test", "zio-test-sbt").map(
-        artifact => "dev.zio" %% artifact % zio_V
-      )
+      libraryDependencies ++= ZioAll ++ Seq(AwsJavaS3)
     )
